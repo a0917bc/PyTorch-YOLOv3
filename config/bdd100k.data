@@ -1,0 +1,6 @@
+classes = 80
+train = bdd100k_data/train.txt
+valid = bdd100k_data/val.txt
+names = bdd100k_data/coco.names
+backup = bdd100k_data/backup/
+eval=coco

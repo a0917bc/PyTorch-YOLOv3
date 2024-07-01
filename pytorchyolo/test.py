@@ -164,7 +164,7 @@ def run():
     parser = argparse.ArgumentParser(description="Evaluate validation data.")
     parser.add_argument("-m", "--model", type=str, default="config/yolov3.cfg", help="Path to model definition file (.cfg)")
     parser.add_argument("-w", "--weights", type=str, default="weights/yolov3.weights", help="Path to weights or checkpoint file (.weights or .pth)")
-    parser.add_argument("-d", "--data", type=str, default="config/coco.data", help="Path to data config file (.data)")
+    parser.add_argument("-d", "--data", type=str, default="config/bdd100k.data", help="Path to data config file (.data)")
     parser.add_argument("-b", "--batch_size", type=int, default=8, help="Size of each image batch")
     parser.add_argument("-v", "--verbose", action='store_true', help="Makes the validation more verbose")
     parser.add_argument("--img_size", type=int, default=416, help="Size of each image dimension for yolo")
@@ -180,7 +180,7 @@ def run():
     # Path to file containing all images for validation
     valid_path = data_config["valid"]
     class_names = load_classes(data_config["names"])  # List of class names
-
+    print(class_names)
     precision, recall, AP, f1, ap_class = evaluate_model_file(
         args.model,
         args.weights,

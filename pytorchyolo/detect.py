@@ -204,12 +204,16 @@ def _draw_and_save_output_image(image_path, detections, img_size, output_path, c
         # Add the bbox to the plot
         ax.add_patch(bbox)
         # Add label
+        # put text out of box
+        x_text = min(max(x1, 0), img.shape[1]-1)
+        y_text = min(max(y1 - 10, 0), img.shape[0]-1)
         plt.text(
-            x1,
-            y1,
+            x_text,
+            y_text,
             s=f"{classes[int(cls_pred)]}: {conf:.2f}",
             color="white",
-            verticalalignment="top",
+            horizontalalignment="left",
+            verticalalignment="bottom",
             bbox={"color": color, "pad": 0})
 
     # Save generated image with detections
@@ -217,7 +221,13 @@ def _draw_and_save_output_image(image_path, detections, img_size, output_path, c
     plt.gca().xaxis.set_major_locator(NullLocator())
     plt.gca().yaxis.set_major_locator(NullLocator())
     filename = os.path.basename(image_path).split(".")[0]
+    dataset_name = os.path.basename(os.path.dirname(image_path))
+    # Create output directory, if missing
+    output_path = os.path.join(output_path, dataset_name)
+    os.makedirs(output_path, exist_ok=True)
     output_path = os.path.join(output_path, f"{filename}.png")
+    # print(output_path)
+    # exit()
     plt.savefig(output_path, bbox_inches="tight", pad_inches=0.0)
     plt.close()
 

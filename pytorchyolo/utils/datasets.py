@@ -32,7 +32,16 @@ def resize(image, size):
 
 class ImageFolder(Dataset):
     def __init__(self, folder_path, transform=None):
-        self.files = sorted(glob.glob("%s/*.*" % folder_path))
+        all_files = glob.glob("%s/*/*.*" % folder_path)
+        # print(all_files)
+        # exit()
+        # 过滤掉路径名称中包含“BnA”的文件
+        filtered_files = [f for f in all_files if 'BnA' not in f]
+
+        # 对过滤后的文件进行排序
+        self.files = sorted(filtered_files)
+        # print(self.files)
+        # exit()
         self.transform = transform
 
     def __getitem__(self, index):
